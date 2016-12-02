@@ -1,0 +1,16 @@
+{
+  "name": "adventofcode2016",
+  "version": "1.0.0",
+  "description": "Advent of code 2016 using TypeScript",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolaspujol/adventofcode2016.git"
+  },
+  "author": "Nicolas PUJOL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicolaspujol/adventofcode2016/issues"
+  },
+  "homepage": "https://github.com/nicolaspujol/adventofcode2016#readme"
+}
