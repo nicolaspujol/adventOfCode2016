@@ -81,7 +81,7 @@
         "label-position": true,
         "max-classes-per-file": [
             true,
-            1
+            2
         ],
         "max-file-line-count": [
             true,
@@ -167,7 +167,7 @@
             "check-whitespace"
         ],
         "one-variable-per-declaration": [
-            false
+            true
         ],
         "only-arrow-functions": [
             true
