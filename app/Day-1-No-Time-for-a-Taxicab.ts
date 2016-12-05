@@ -30,11 +30,6 @@ How many blocks away is Easter Bunny HQ?
 */
 
 namespace AdventOfCode {
-    // Interfaces
-    interface ICoordinateObject {
-        x: number;
-        y: number;
-    }
 
     // Enums
     enum Direction {
