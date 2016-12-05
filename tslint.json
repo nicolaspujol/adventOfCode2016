@@ -53,6 +53,7 @@
             true,
             "spaces"
         ],
+        "max-line-length": [true, 120],
         "no-eval": true,
         "no-internal-module": true,
         "no-trailing-whitespace": true,
