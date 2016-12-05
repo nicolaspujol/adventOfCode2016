@@ -31,27 +31,27 @@ How many blocks away is Easter Bunny HQ?
 
 namespace AdventOfCode {
     // Interfaces
-    interface CoordinateObject {
+    interface ICoordinateObject {
         x: number;
         y: number;
     }
 
     export class NoTimeforATaxicab {
         private _path: Array<string>;
-        private _coord: CoordinateObject;
+        private _coord: ICoordinateObject;
         private _direction: number;
 
-        constructor(path: string) {
+        public constructor(path: string) {
             this._path = path.split(", ");
-            this._coord = { x: 0, y: 0 };
+            this._coord = { "x": 0, "y": 0 };
             this._direction = 0;
         };
 
-        getDistance(): number {
+        public getDistance(): number {
             for (let i: number = 0; i < this._path.length; i++) {
                 let instructions: Array<string> = (this._path[i]).match(/(L|R)([0-9]*)/);
                 let direction: string = instructions[1];
-                let distance: number = parseInt(instructions[2]);
+                let distance: number = parseInt(instructions[2], 10);
 
                 if (this._direction === 0) {
                     if (direction === "L") {
@@ -90,13 +90,19 @@ namespace AdventOfCode {
                         this._direction = 0;
                     }
                 }
-            };
+            }
+
             return Math.abs(this._coord.x) + Math.abs(this._coord.y);
         }
     }
 }
 
-let testInputs = [
+interface ITestInputsObject {
+    "input": string;
+    "result": number;
+}
+
+let testInputs: Array<ITestInputsObject> = [
     {
         "input": "R2, L3",
         "result": 5
@@ -112,15 +118,14 @@ let testInputs = [
 ];
 
 for (let testInput of testInputs) {
-    let distanceTest = new AdventOfCode.NoTimeforATaxicab(testInput.input),
-        distanceGet = distanceTest.getDistance();
+    let distanceTest: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(testInput.input),
+        distanceGet: number = distanceTest.getDistance();
 
     if (distanceGet !== testInput.result) {
         throw "Test failed: (" + typeof distanceGet + ")" + distanceGet +
             " !== (" + typeof testInput.result + ")" + testInput.result;
     }
 }
-
 
 let input: string = `L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4, R3, R3, L1, L4, R4, L2, R5, R1, L5, 
     R1, R3, L5, R2, L2, R2, R1, L1, L3, L3, R4, R5, R4, L1, L189, L2, R2, L5, R5, R45, L3, R4, R77, L1, R1, R194, R2,
@@ -129,5 +134,5 @@ let input: string = `L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4,
     R5, L3, L5, L3, L3, R5, R4, R1, L3, R1, L3, R3, R3, R3, L1, R3, R4, L5, L3, L1, L5, L4, R4, R1, L4, R3, R3, R5,
     R4, R3, R3, L1, L2, R1, L4, L4, L3, L4, L3, L5, R2, R4, L2`;
 
-let distance = new AdventOfCode.NoTimeforATaxicab(input);
+let distance: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(input);
 console.log(distance.getDistance());
