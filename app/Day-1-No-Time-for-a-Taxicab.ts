@@ -27,6 +27,15 @@ R2, R2, R2 leaves you 2 blocks due South of your starting position, which is 2 b
 R5, L5, R5, R3 leaves you 12 blocks away.
 
 How many blocks away is Easter Bunny HQ?
+
+--- Part Two ---
+
+Then, you notice the instructions continue on the back of the Recruiting Document.
+Easter Bunny HQ is actually at the first location you visit twice.
+
+For example, if your instructions are R8, R4, R4, R8, the first location you visit twice is 4 blocks away, due East.
+
+How many blocks away is the first location you visit twice?
 */
 
 namespace AdventOfCode {
@@ -36,73 +45,67 @@ namespace AdventOfCode {
         y: number;
     }
 
+    // Enums
+    enum Direction {
+        North = 0,
+        East = 1,
+        South = 2,
+        West = 3
+    }
+
     export class NoTimeforATaxicab {
         private _path: Array<string>;
-        private _coord: ICoordinateObject;
-        private _direction: number;
+        private _coord: Array<number>;
+        private _direction: Direction;
 
         public constructor(path: string) {
             this._path = path.split(", ");
-            this._coord = { "x": 0, "y": 0 };
-            this._direction = 0;
+            this._direction = Direction.North;
+            this._coord = [0, 0];
         };
 
-        public getDistance(): number {
-            for (let i: number = 0; i < this._path.length; i++) {
-                let instructions: Array<string> = (this._path[i]).match(/(L|R)([0-9]*)/);
-                let direction: string = instructions[1];
-                let distance: number = parseInt(instructions[2], 10);
-
-                if (this._direction === 0) {
-                    if (direction === "L") {
-                        this._coord.x -= distance;
-                        this._direction = 3;
-                    }
-                    if (direction === "R") {
-                        this._coord.x += distance;
-                        this._direction = 1;
-                    }
-                } else if (this._direction === 1) {
-                    if (direction === "L") {
-                        this._coord.y += distance;
-                        this._direction = 0;
-                    }
-                    if (direction === "R") {
-                        this._coord.y -= distance;
-                        this._direction = 2;
-                    }
-                } else if (this._direction === 2) {
-                    if (direction === "L") {
-                        this._coord.x += distance;
-                        this._direction = 1;
-                    }
-                    if (direction === "R") {
-                        this._coord.x -= distance;
-                        this._direction = 3;
-                    }
-                } else if (this._direction === 3) {
-                    if (direction === "L") {
-                        this._coord.y -= distance;
-                        this._direction = 2;
-                    }
-                    if (direction === "R") {
-                        this._coord.y += distance;
-                        this._direction = 0;
-                    }
-                }
+        public getTotalBlocks(): number {
+            for (let step of this._path) {
+                this._direction = this.getNextDir(step[0]);
+                this._coord = this.getNextCoord(parseInt(step.substring(1), 10));
             }
 
-            return Math.abs(this._coord.x) + Math.abs(this._coord.y);
+            return (Math.abs(this._coord[0]) + Math.abs(this._coord[1]));
+        }
+
+        private getNextCoord(distance: number): Array<number> {
+            switch (this._direction) {
+                case Direction.North: return [this._coord[0] + distance, this._coord[1]];
+                case Direction.East: return [this._coord[0], this._coord[1] + distance];
+                case Direction.South: return [this._coord[0] - distance, this._coord[1]];
+                case Direction.West: return [this._coord[0], this._coord[1] - distance];
+            }
+            return undefined;
+        }
+
+        private getNextDir(turnDirection: string): number {
+            let newDirection: number = this._direction + (turnDirection === "L" ? -1 : 1);
+
+            if (newDirection === -1) {
+                return Direction.West;
+            }
+            if (newDirection === 4) {
+                return Direction.North;
+            }
+            return newDirection;
         }
     }
 }
 
-interface ITestInputsObject {
+/**
+ * TESTS
+ */
+interface ITestInputs1Object {
     "input": string;
     "result": number;
 }
 
-let testInputs: Array<ITestInputsObject> = [
+let testInputs1: Array<ITestInputs1Object> = [
     {
         "input": "R2, L3",
         "result": 5
@@ -117,22 +120,26 @@ let testInputs: Array<ITestInputsObject> = [
     }
 ];
 
-for (let testInput of testInputs) {
-    let distanceTest: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(testInput.input),
-        distanceGet: number = distanceTest.getDistance();
+for (let testInput of testInputs1) {
+    let distanceTest: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(testInput.input);
+    let distanceGet: number = distanceTest.getTotalBlocks();
 
     if (distanceGet !== testInput.result) {
         throw "Test failed: (" + typeof distanceGet + ")" + distanceGet +
-            " !== (" + typeof testInput.result + ")" + testInput.result;
+        " !== (" + typeof testInput.result + ")" + testInput.result;
     }
 }
 
-let input: string = `L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4, R3, R3, L1, L4, R4, L2, R5, R1, L5, 
-    R1, R3, L5, R2, L2, R2, R1, L1, L3, L3, R4, R5, R4, L1, L189, L2, R2, L5, R5, R45, L3, R4, R77, L1, R1, R194, R2,
-    L5, L3, L2, L1, R5, L3, L3, L5, L5, L5, R2, L1, L2, L3, R2, R5, R4, L2, R3, R5, L2, L2, R3, L3, L2, L1, L3, R5,
-    R4, R3, R2, L1, R2, L5, R4, L5, L4, R4, L2, R5, L3, L2, R4, L1, L2, R2, R3, L2, L5, R1, R1, R3, R4, R1, R2, R4,
-    R5, L3, L5, L3, L3, R5, R4, R1, L3, R1, L3, R3, R3, R3, L1, R3, R4, L5, L3, L1, L5, L4, R4, R1, L4, R3, R3, R5,
-    R4, R3, R3, L1, L2, R1, L4, L4, L3, L4, L3, L5, R2, R4, L2`;
+/**
+ * SOLUTION
+ */
+let input: string = "L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4, R3, R3, L1, L4, R4, L2, R5, R1, " +
+    "L5, R1, R3, L5, R2, L2, R2, R1, L1, L3, L3, R4, R5, R4, L1, L189, L2, R2, L5, R5, R45, L3, R4, R77, L1, R1, " +
+    "R194, R2, L5, L3, L2, L1, R5, L3, L3, L5, L5, L5, R2, L1, L2, L3, R2, R5, R4, L2, R3, R5, L2, L2, R3, L3, " +
+    "L2, L1, L3, R5, R4, R3, R2, L1, R2, L5, R4, L5, L4, R4, L2, R5, L3, L2, R4, L1, L2, R2, R3, L2, L5, R1, R1, " +
+    "R3, R4, R1, R2, R4, R5, L3, L5, L3, L3, R5, R4, R1, L3, R1, L3, R3, R3, R3, L1, R3, R4, L5, L3, L1, L5, L4, " +
+    "R4, R1, L4, R3, R3, R5, R4, R3, R3, L1, L2, R1, L4, L4, L3, L4, L3, L5, R2, R4, L2";
 
-let distance: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(input);
-console.log(distance.getDistance());
+let blocksAway: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(input);
+
+console.log("Blocks Away: ", blocksAway.getTotalBlocks());
