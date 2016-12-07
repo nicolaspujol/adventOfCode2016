@@ -39,7 +39,7 @@ namespace AdventOfCodeDay1Part1 {
         West = 3
     }
 
-    export class NoTimeforATaxicab {
+    class NoTimeforATaxicab {
         private _path: Array<string>;
         private _coord: Array<number>;
         private _direction: Direction;
