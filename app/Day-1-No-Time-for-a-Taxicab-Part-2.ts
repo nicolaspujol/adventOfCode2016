@@ -25,7 +25,7 @@ namespace AdventOfCodeDay1Part2 {
         "repeat": Array<number>;
     }
 
-    export class NoTimeforATaxicab {
+    class NoTimeforATaxicab {
         private _path: Array<string>;
         private _coord: Array<number>;
         private _prevCoord: Array<string>;
