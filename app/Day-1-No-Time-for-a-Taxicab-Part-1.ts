@@ -29,7 +29,7 @@ R5, L5, R5, R3 leaves you 12 blocks away.
 How many blocks away is Easter Bunny HQ?
 */
 
-namespace AdventOfCode {
+namespace AdventOfCodeDay1Part1 {
 
     // Enums
     enum Direction {
@@ -81,51 +81,52 @@ namespace AdventOfCode {
             return newDirection;
         }
     }
-}
 
-/**
- * TESTS
- */
-interface ITestInputs1Object {
-    "input": string;
-    "result": number;
-}
-
-let testInputs1: Array<ITestInputs1Object> = [
-    {
-        "input": "R2, L3",
-        "result": 5
-    },
-    {
-        "input": "R2, R2, R2",
-        "result": 2
-    },
-    {
-        "input": "R5, L5, R5, R3",
-        "result": 12
+    /**
+     * TESTS
+     */
+    interface ITestInputsObject {
+        "input": string;
+        "result": number;
     }
-];
 
-for (let testInput of testInputs1) {
-    let distanceTest: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(testInput.input);
-    let distanceGet: number = distanceTest.getTotalBlocks();
+    let testInputs: Array<ITestInputsObject> = [
+        {
+            "input": "R2, L3",
+            "result": 5
+        },
+        {
+            "input": "R2, R2, R2",
+            "result": 2
+        },
+        {
+            "input": "R5, L5, R5, R3",
+            "result": 12
+        }
+    ];
 
-    if (distanceGet !== testInput.result) {
-        throw "Test failed: (" + typeof distanceGet + ")" + distanceGet +
-        " !== (" + typeof testInput.result + ")" + testInput.result;
+    for (let testInput of testInputs) {
+        let distanceTest: NoTimeforATaxicab = new NoTimeforATaxicab(testInput.input);
+        let distanceGet: number = distanceTest.getTotalBlocks();
+
+        if (distanceGet !== testInput.result) {
+            throw "Test failed: (" + typeof distanceGet + ")" + distanceGet +
+            " !== (" + typeof testInput.result + ")" + testInput.result;
+        }
     }
+
+    /**
+     * SOLUTION
+     */
+    let input: string = "L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4, R3, R3, L1, L4, R4, L2, R5, R1, " +
+        "L5, R1, R3, L5, R2, L2, R2, R1, L1, L3, L3, R4, R5, R4, L1, L189, L2, R2, L5, R5, R45, L3, R4, R77, L1, R1, " +
+        "R194, R2, L5, L3, L2, L1, R5, L3, L3, L5, L5, L5, R2, L1, L2, L3, R2, R5, R4, L2, R3, R5, L2, L2, R3, L3, " +
+        "L2, L1, L3, R5, R4, R3, R2, L1, R2, L5, R4, L5, L4, R4, L2, R5, L3, L2, R4, L1, L2, R2, R3, L2, L5, R1, R1, " +
+        "R3, R4, R1, R2, R4, R5, L3, L5, L3, L3, R5, R4, R1, L3, R1, L3, R3, R3, R3, L1, R3, R4, L5, L3, L1, L5, L4, " +
+        "R4, R1, L4, R3, R3, R5, R4, R3, R3, L1, L2, R1, L4, L4, L3, L4, L3, L5, R2, R4, L2";
+
+    let blocksAway: NoTimeforATaxicab = new NoTimeforATaxicab(input);
+
+    console.log("Blocks Away: ", blocksAway.getTotalBlocks());
+
 }
-
-/**
- * SOLUTION
- */
-let input: string = "L2, L3, L3, L4, R1, R2, L3, R3, R3, L1, L3, R2, R3, L3, R4, R3, R3, L1, L4, R4, L2, R5, R1, " +
-    "L5, R1, R3, L5, R2, L2, R2, R1, L1, L3, L3, R4, R5, R4, L1, L189, L2, R2, L5, R5, R45, L3, R4, R77, L1, R1, " +
-    "R194, R2, L5, L3, L2, L1, R5, L3, L3, L5, L5, L5, R2, L1, L2, L3, R2, R5, R4, L2, R3, R5, L2, L2, R3, L3, " +
-    "L2, L1, L3, R5, R4, R3, R2, L1, R2, L5, R4, L5, L4, R4, L2, R5, L3, L2, R4, L1, L2, R2, R3, L2, L5, R1, R1, " +
-    "R3, R4, R1, R2, R4, R5, L3, L5, L3, L3, R5, R4, R1, L3, R1, L3, R3, R3, R3, L1, R3, R4, L5, L3, L1, L5, L4, " +
-    "R4, R1, L4, R3, R3, R5, R4, R3, R3, L1, L2, R1, L4, L4, L3, L4, L3, L5, R2, R4, L2";
-
-let blocksAway: AdventOfCode.NoTimeforATaxicab = new AdventOfCode.NoTimeforATaxicab(input);
-
-console.log("Blocks Away: ", blocksAway.getTotalBlocks());
