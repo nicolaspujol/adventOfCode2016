@@ -67,7 +67,7 @@
             20
         ],
         "eofline": true,
-        "forin": true,
+        "forin": false,
         "indent": [
             true,
             "spaces"
@@ -84,7 +84,7 @@
         ],
         "max-file-line-count": [
             true,
-            500
+            1500
         ],
         "max-line-length": [
             true,
