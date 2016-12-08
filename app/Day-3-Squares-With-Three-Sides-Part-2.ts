@@ -30,25 +30,14 @@ namespace AdventOfCodeDay3Part2 {
         public getPossibleTriangles(): number {
             let possibbleTriangles: number = 0;
 
-            for (let i: number = 0; i < this._input.length - 2; i += 3) {
-                let pos0x0: number = this._input[i][0];
-                let pos1x0: number = this._input[i + 1][0];
-                let pos2x0: number = this._input[i + 2][0];
-                if (this.isTriangle([pos0x0, pos1x0, pos2x0])) {
+            for (let i: number = 0; i < this._input.length - 1; i += 3) {
+                if (this.isTriangle(this._input[i][0], this._input[i + 1][0], this._input[i + 2][0])) {
                     possibbleTriangles += 1;
                 }
-
-                let pos0x1: number = this._input[i][1];
-                let pos1x1: number = this._input[i + 1][1];
-                let pos2x1: number = this._input[i + 2][1];
-                if (this.isTriangle([pos0x1, pos1x1, pos2x1])) {
+                if (this.isTriangle(this._input[i][1], this._input[i + 1][1], this._input[i + 2][1])) {
                     possibbleTriangles += 1;
                 }
-
-                let pos0x2: number = this._input[i][2];
-                let pos1x2: number = this._input[i + 1][2];
-                let pos2x2: number = this._input[i + 2][2];
-                if (this.isTriangle([pos0x2, pos1x2, pos2x2])) {
+                if (this.isTriangle(this._input[i][2], this._input[i + 1][2], this._input[i + 2][2])) {
                     possibbleTriangles += 1;
                 }
             }
@@ -56,10 +45,8 @@ namespace AdventOfCodeDay3Part2 {
             return possibbleTriangles;
         }
 
-        private isTriangle(dimensions: Array<number>): boolean {
-            return ((dimensions[0] + dimensions[1] > dimensions[2]) &&
-                (dimensions[2] + dimensions[0] > dimensions[1]) &&
-                (dimensions[1] + dimensions[2] > dimensions[0]));
+        private isTriangle(a: number, b: number, c: number): boolean {
+            return a + b > c && a + c > b && b + c > a;
         }
 
     }
