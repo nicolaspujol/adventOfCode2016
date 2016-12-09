@@ -16,7 +16,7 @@ For example, the real name for qzmt-zixmtkozy-ivhz-343 is very encrypted name.
 What is the sector ID of the room where North Pole objects are stored?
 */
 
-namespace AdventOfCodeDay4Part1 {
+namespace AdventOfCodeDay4Part2 {
     // Interfaces
     interface IparsedLineObject {
         "name": string;
