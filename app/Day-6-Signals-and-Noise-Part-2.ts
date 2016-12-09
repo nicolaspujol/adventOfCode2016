@@ -15,7 +15,7 @@ Given the recording in your puzzle input and this new decoding methodology,
 what is the original message that Santa is trying to send?
 */
 
-namespace AdventOfCodeDay6Part1 {
+namespace AdventOfCodeDay6Part2 {
 
     class SignalsAndNoise {
 
