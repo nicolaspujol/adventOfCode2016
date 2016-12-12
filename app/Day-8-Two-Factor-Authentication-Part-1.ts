@@ -70,9 +70,8 @@ namespace AdventOfCodeDay8Part1 {
 
         public getLitPixels(): number {
             for (let line of this._input) {
-                let params: Array<string>;
                 if (line.substr(0, 4) === "rect") {
-                    params = /rect ([0-9]*)x([0-9]*)/.exec(line);
+                    let params: Array<string> = /rect ([0-9]*)x([0-9]*)/.exec(line);
                     this._sum += parseInt(params[1], 10) * parseInt(params[2], 10);
                 }
             }
