@@ -203,7 +203,7 @@ namespace AdventOfCodeDay11Part1 {
 
         public getMinimumNumberOfSteps(): number {
             this.parseInput();
-            return this.searchForSolution().length - 1;
+            return this.getSteps().length - 1;
         }
 
         private parseInput(): void {
@@ -276,7 +276,7 @@ namespace AdventOfCodeDay11Part1 {
             }
         }
 
-        private searchForSolution(): Array<IStateObject> {
+        private getSteps(): Array<IStateObject> {
             let initialState: IStateObject = {
                 "elevator": 0,
                 "items": this._inputItems
@@ -297,7 +297,7 @@ namespace AdventOfCodeDay11Part1 {
                     }
                     return steps.reverse();
                 }
-                let nextStates: Array<IStateObject> = this.nextValidUnexploredStates(exploredStates, state);
+                let nextStates: Array<IStateObject> = this.getNextStates(exploredStates, state);
                 for (let nextState of nextStates) {
                     this.push(queue, { "prev": node, "state": nextState });
                 }
@@ -306,8 +306,8 @@ namespace AdventOfCodeDay11Part1 {
             throw new Error("No solution found");
         }
 
-        private nextValidUnexploredStates(exploredStates: Object, state: IStateObject): Array<IStateObject> {
-            let possibleStates: Array<IStateObject> = this.nextPossibleStates(state);
+        private getNextStates(exploredStates: Object, state: IStateObject): Array<IStateObject> {
+            let possibleStates: Array<IStateObject> = this.getNextPossibleStates(state);
             return possibleStates.filter((currState: IStateObject) => {
                 let hash: string = this.stateHash(currState);
                 if (exploredStates[hash]) {
@@ -318,7 +318,7 @@ namespace AdventOfCodeDay11Part1 {
             });
         }
 
-        private nextPossibleStates(state: IStateObject): Array<IStateObject> {
+        private getNextPossibleStates(state: IStateObject): Array<IStateObject> {
             let canMove: Array<number> = [];
             for (let i: number = 0; i < state.items.length; i++) {
                 if (state.items[i] === state.elevator) {
