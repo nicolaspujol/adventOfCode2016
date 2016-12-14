@@ -36,7 +36,7 @@ Based on your instructions, what is the number of the bot that is responsible
 for comparing value-61 microchips with value-17 microchips?
 */
 
-namespace AdventOfCodeDay10Part1 {
+namespace AdventOfCodeDay10Part2 {
 
     class BalanceBots {
 
