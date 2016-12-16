@@ -299,7 +299,7 @@ namespace AdventOfCodeDay14Part2 {
 
     for (let testInput of testInputs) {
         let codeTest: OneTimePad = new OneTimePad(testInput.input);
-        let test: number | boolean = codeTest.getIndex();
+        let test: number = codeTest.getIndex();
 
         if (test !== testInput.result) {
             throw "Test failed: (" + typeof test + ")" + test +
